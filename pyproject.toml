@@ -1,0 +1,42 @@
+[tool.poetry]
+
+# Change this to the name of your own extension
+name = "skybrush-ext-rc-gamepad"
+version = "1.0.0"
+description = "Enabling the usage of gamepads as remote controllers in Skybrush Server"
+authors = ["Tamas Nepusz <ntamas@gmail.com>"]
+license = "MIT"
+packages = [
+  # Change this to the name of the folder in src/ containing your extension
+  { include = "skybrush_ext_rc_gamepad", from = "src" }
+]
+
+[[tool.poetry.source]]
+name = "collmot"
+url = "https://pypi.collmot.com/simple"
+secondary = true
+
+[[tool.poetry.source]]
+name = "fury"
+url = "https://pypi.fury.io/skybrush/"
+secondary = true
+
+[tool.poetry.dependencies]
+python = "^3.9"
+hidapi = "^0.13.1"
+
+[tool.poetry.dev-dependencies]
+flockwave-server = { version = "^2.9.0", source = "collmot" }
+
+[tool.poetry.plugins]
+
+[tool.poetry.plugins."skybrush.server.ext"]
+rc_gamepad = "skybrush_ext_rc_gamepad"
+
+[tool.poetry.scripts]
+skybrushd = "flockwave.server.launcher:start"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+

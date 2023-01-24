@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "match": {
+        "vid": "0x0c45",
+        "pid": "0x4320"
+      },
+      "description": "XEOX Gamepad SL-6556-BK",
+      "controls": [
+        {
+          "channel": 1,
+          "type": "axis",
+          "offset": 2
+        },
+        {
+          "channel": 2,
+          "type": "axis",
+          "offset": 3
+        },
+        {
+          "channel": 3,
+          "type": "axis",
+          "offset": 1,
+          "invert": true
+        },
+        {
+          "channel": 4,
+          "type": "axis",
+          "offset": 0
+        },
+        {
+          "channel": 5,
+          "type": "multibutton",
+          "buttons": [
+            {
+              "offset": 4,
+              "bit": 0,
+              "value": 6554
+            },
+            {
+              "offset": 4,
+              "bit": 1,
+              "value": 19660
+            },
+            {
+              "offset": 4,
+              "bit": 2,
+              "value": 26214
+            },
+            {
+              "offset": 4,
+              "bit": 3,
+              "value": 36044
+            },
+            {
+              "offset": 4,
+              "bit": 4,
+              "value": 45875
+            },
+            {
+              "offset": 4,
+              "bit": 5,
+              "value": 52428
+            }
+          ]
+        },
+        {
+          "channel": 6,
+          "type": "button",
+          "offset": 5,
+          "bit": 1
+        },
+        {
+          "channel": 7,
+          "type": "hat",
+          "offset": 6,
+          "axis": "x"
+        },
+        {
+          "channel": 8,
+          "type": "hat",
+          "offset": 6,
+          "axis": "y"
+        }
+      ]
+    }
+  ]
+}
