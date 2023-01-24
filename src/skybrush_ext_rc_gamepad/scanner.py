@@ -36,7 +36,7 @@ class GamepadScanner:
         seen: Set[HIDDescriptor] = set()
         for device in hid.enumerate():
             # Limit ourselves to generic HID devices only
-            if device.get("usage_page") != 1:
+            if device.get("usage_page") not in (0, 1):
                 continue
 
             # Extract the vendor / product ID, the manufacturer, the product
