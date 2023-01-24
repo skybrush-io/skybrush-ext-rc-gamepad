@@ -4,9 +4,9 @@ remote controllers.
 
 from .extension import RCGamepadExtension as construct
 
-__all__ = ("construct", )
+__all__ = ("construct",)
 
 description = "RC input source using USB gamepads"
 dependencies = ("hotplug", "rc", "signals")
-tags = ("experimental", )
+tags = ("experimental",)
 schema = {}
