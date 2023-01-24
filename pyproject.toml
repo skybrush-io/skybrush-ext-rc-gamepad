@@ -2,7 +2,7 @@
 
 # Change this to the name of your own extension
 name = "skybrush-ext-rc-gamepad"
-version = "0.0.1"
+version = "0.1.0"
 description = "Enabling the usage of gamepads as remote controllers in Skybrush Server"
 authors = ["Tamas Nepusz <ntamas@gmail.com>"]
 license = "MIT"
