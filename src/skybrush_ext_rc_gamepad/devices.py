@@ -415,10 +415,14 @@ class SupportedDeviceRules(Sequence[Rule]):
 
     def extend_with_builtins(self) -> None:
         """Extends the ruleset with the built-in rules from the extension."""
-        from importlib.resources import files
+        from importlib.resources import open_text
         from json import load
 
-        with files(__package__).joinpath("supported_devices.json").open("r") as fp:
+        # open_text() is deprecated, but the new files() API breaks PyOxidizer
+        # as of 2023-02-08. Migrate to files() only when this issue is fixed:
+        # https://github.com/indygreg/PyOxidizer/issues/529
+        # with files(__package__).joinpath("supported_devices.json").open("r") as fp:
+        with open_text(__package__, "supported_devices.json") as fp:
             self.extend_from_json(load(fp))
 
     def match(self, descriptor: HIDDescriptor) -> Optional[Rule]:
