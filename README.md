@@ -48,4 +48,3 @@ so we can add support for it in the next release.
 
 [1]: https://github.com/skybrush-io/skybrush-ext-rc-gamepad/blob/main/src/skybrush_ext_rc_gamepad/supported_devices.json
 [2]: https://github.com/skybrush-io/skybrush-ext-rc-gamepad/issues/new
-
