@@ -35,6 +35,7 @@ rc_gamepad = "skybrush_ext_rc_gamepad"
 
 [tool.poetry.scripts]
 skybrushd = "flockwave.server.launcher:start"
+hid_test = "skybrush_ext_rc_gamepad.hid_test:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
