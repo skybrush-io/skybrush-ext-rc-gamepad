@@ -18,19 +18,23 @@ def main():
     while True:
         devices = [None]
         for device in hid.enumerate():
-            if not device['vendor_id'] or not device['product_id']:
+            if not device["vendor_id"] or not device["product_id"]:
                 continue
 
             if device.get("usage_page") not in (0, 1):
                 continue
 
             index = len(devices)
-            decoded_path = device['path'].decode("utf-8", "replace")
-            print(f"{index:2}: 0x{device['vendor_id']:04x}:0x{device['product_id']:04x}\t{device['product_string']}  {decoded_path}")
-            devices.append(device['path'])
+            decoded_path = device["path"].decode("utf-8", "replace")
+            print(
+                f"{index:2}: 0x{device['vendor_id']:04x}:0x{device['product_id']:04x}\t{device['product_string']}  {decoded_path}"
+            )
+            devices.append(device["path"])
 
         print()
-        print("Please enter the index of the device you want to test, an empty string to re-scan, or anything else to exit:")
+        print(
+            "Please enter the index of the device you want to test, an empty string to re-scan, or anything else to exit:"
+        )
         selected = input()
         if not selected:
             continue
@@ -41,7 +45,6 @@ def main():
             return
         else:
             break
-
 
     gamepad = hid.device()
     print("Opening device...")
@@ -56,4 +59,5 @@ def main():
 
 if __name__ == "__main__":
     import sys
+
     sys.exit(main())
