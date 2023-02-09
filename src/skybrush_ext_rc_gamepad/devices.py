@@ -394,9 +394,13 @@ class SupportedDeviceRules(Sequence[Rule]):
         """Removes all rules from the ruleset."""
         self._rules.clear()
 
-    def extend_from_json(self, obj: Any) -> None:
+    def extend_from_json(self, obj: Any, *, prepend: bool = False) -> None:
         """Extends the ruleset from a JSON representation that is used in
         the ``supported_devices.json`` file.
+
+        Parameters:
+            prepend: whether to prepend the newly loaded rules to the existing
+                list of rules
         """
         if not isinstance(obj, dict):
             raise TypeError(f"expected dict, got {type(obj)!r}")
@@ -411,10 +415,19 @@ class SupportedDeviceRules(Sequence[Rule]):
 
         for rule in cast(Iterable[Rule], rules):
             if isinstance(rule, dict):
-                self.append(Rule.from_json(rule))
+                rule = Rule.from_json(rule)
+                if prepend:
+                    self.prepend(rule)
+                else:
+                    self.append(rule)
 
-    def extend_with_builtins(self) -> None:
-        """Extends the ruleset with the built-in rules from the extension."""
+    def extend_with_builtins(self, *, prepend: bool = False) -> None:
+        """Extends the ruleset with the built-in rules from the extension.
+
+        Parameters:
+            prepend: whether to prepend the newly loaded rules to the existing
+                list of rules
+        """
         from importlib.resources import open_text
         from json import load
 
@@ -423,7 +436,7 @@ class SupportedDeviceRules(Sequence[Rule]):
         # https://github.com/indygreg/PyOxidizer/issues/529
         # with files(__package__).joinpath("supported_devices.json").open("r") as fp:
         with open_text(__package__, "supported_devices.json") as fp:
-            self.extend_from_json(load(fp))
+            self.extend_from_json(load(fp), prepend=prepend)
 
     def match(self, descriptor: HIDDescriptor) -> Optional[Rule]:
         """Returns the first rule in the ruleset that matches the given HID
@@ -432,6 +445,10 @@ class SupportedDeviceRules(Sequence[Rule]):
         for rule in self:
             if rule.match(descriptor):
                 return rule
+
+    def prepend(self, rule: Rule) -> None:
+        """Prepends the given rule to the start of the ruleset."""
+        self._rules.insert(0, rule)
 
     def __getitem__(self, index: int) -> Rule:
         return self._rules[index]

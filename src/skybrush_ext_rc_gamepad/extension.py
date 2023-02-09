@@ -35,6 +35,17 @@ class RCGamepadExtension(Extension):
 
             scanner = GamepadScanner()
 
+            if "devices" in configuration:
+                num_rules = len(scanner.rules)
+                scanner.rules.extend_from_json(configuration["devices"], prepend=True)
+                num_rules = len(scanner.rules) - num_rules
+                if num_rules == 1:
+                    logger.info("Loaded 1 custom device rule from configuration")
+                elif num_rules > 1:
+                    logger.info(
+                        f"Loaded {num_rules} custom device rules from configuration"
+                    )
+
             while True:
                 maybe_result = await scanner.scan()
                 if maybe_result:
