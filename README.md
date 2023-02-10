@@ -1,5 +1,4 @@
-Gamepad-as-simulated-RC extension for Skybrush Server
-=====================================================
+# Gamepad-as-simulated-RC extension for Skybrush Server
 
 This repository contains an experimental extension module to Skybrush Server
 that allows any gamepad that appears as a USB Human Interface Device to be
@@ -8,8 +7,7 @@ periodically reading the HID input report bytes from the gamepad and converting
 them to RC channel values according to a descriptor file that specifies which
 bytes of the HID input report should be mapped to which RC channels.
 
-Installation
-------------
+## Installation
 
 1. Check out this repository using git.
 
@@ -27,8 +25,7 @@ Installation
 5. In the shell prompt, type `skybrushd -c skybrushd.jsonc` to start the server
    with a configuration file that loads the extension.
 
-Adding support for a new gamepad
---------------------------------
+## Adding support for a new gamepad
 
 See [`src/skybrush_ext_rc_gamepad/supported_devices.json`][1]; this is the file
 that contains the descriptors for all the gamepads that we currently support.
@@ -39,8 +36,9 @@ looks like.
 
 Many gamepads out there provide data in the same format as the PlayStation 4
 gamepad; the Horipad mini4 (which we support) is an example. If your gamepad
-is compatible with the Horipad mini4, chances are that you can simply copy
-its descriptor after changing the USB vendor and product ID to your gamepad.
+is compatible with the Horipad mini4, chances are that you can simply add its
+USB vendor and product ID to the appropriate section of the device descriptor
+file to implement support for your gamepad.
 
 If you managed to make this extension work for one of your gamepads and we
 do not support it officially yet, [open an issue][2] or send us a pull request
