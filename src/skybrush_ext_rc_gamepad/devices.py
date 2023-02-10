@@ -333,6 +333,10 @@ class Rule:
             if not isinstance(cond["pid"], int):
                 raise TypeError("product ID must be an integer")
 
+        if "description" in cond:
+            if not isinstance(cond["description"], str):
+                raise TypeError("condition description must be a string")
+
         return cond
 
     def match(self, descriptor: HIDDescriptor) -> bool:

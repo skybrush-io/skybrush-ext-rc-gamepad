@@ -4,9 +4,9 @@
     {
       "match": {
         "vid": "0x0c45",
-        "pid": "0x4320"
+        "pid": "0x4320",
+        "description": "XEOX Gamepad SL-6556-BK"
       },
-      "description": "XEOX Gamepad SL-6556-BK",
       "controls": [
         {
           "channel": 1,
@@ -86,11 +86,18 @@
       ]
     },
     {
-      "match": {
-        "vid": "0x0f0d",
-        "pid": "0x00ee"
-      },
-      "description": "HORIPAD mini4",
+      "match": [
+        {
+          "vid": "0x054c",
+          "pid": "0x0ce6",
+          "description": "Sony PlayStation 4 DualShock 4"
+        },
+        {
+          "vid": "0x0f0d",
+          "pid": "0x00ee",
+          "description": "HORIPAD mini4"
+        }
+      ],
       "controls": [
         {
           "channel": 1,
@@ -165,6 +172,90 @@
           "channel": 8,
           "type": "hat",
           "offset": 5,
+          "axis": "y"
+        }
+      ]
+    },
+    {
+      "match": {
+        "vid": "0x054c",
+        "pid": "0x0ce6",
+        "description": "Sony PlayStation 5 DualSense"
+      },
+      "controls": [
+        {
+          "channel": 1,
+          "type": "axis",
+          "offset": 3
+        },
+        {
+          "channel": 2,
+          "type": "axis",
+          "offset": 4
+        },
+        {
+          "channel": 3,
+          "type": "axis",
+          "offset": 2,
+          "invert": true
+        },
+        {
+          "channel": 4,
+          "type": "axis",
+          "offset": 1
+        },
+        {
+          "channel": 5,
+          "type": "multibutton",
+          "buttons": [
+            {
+              "offset": 8,
+              "bit": 7,
+              "value": 6554
+            },
+            {
+              "offset": 8,
+              "bit": 5,
+              "value": 19660
+            },
+            {
+              "offset": 8,
+              "bit": 6,
+              "value": 26214
+            },
+            {
+              "offset": 8,
+              "bit": 4,
+              "value": 36044
+            },
+            {
+              "offset": 9,
+              "bit": 0,
+              "value": 45875
+            },
+            {
+              "offset": 9,
+              "bit": 1,
+              "value": 52428
+            }
+          ]
+        },
+        {
+          "channel": 6,
+          "type": "button",
+          "offset": 9,
+          "bit": 2
+        },
+        {
+          "channel": 7,
+          "type": "hat",
+          "offset": 8,
+          "axis": "x"
+        },
+        {
+          "channel": 8,
+          "type": "hat",
+          "offset": 8,
           "axis": "y"
         }
       ]
