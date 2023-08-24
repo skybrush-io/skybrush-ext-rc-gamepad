@@ -259,6 +259,90 @@
           "axis": "y"
         }
       ]
+    },
+    {
+      "match": {
+        "vid": "0x0e8f",
+        "pid": "0x0003",
+        "description": "GreenAsia Inc. MaxFire Blaze2"
+      },
+      "controls": [
+        {
+          "channel": 1,
+          "type": "axis",
+          "offset": 1
+        },
+        {
+          "channel": 2,
+          "type": "axis",
+          "offset": 0
+        },
+        {
+          "channel": 3,
+          "type": "axis",
+          "offset": 3,
+          "invert": true
+        },
+        {
+          "channel": 4,
+          "type": "axis",
+          "offset": 2
+        },
+        {
+          "channel": 5,
+          "type": "multibutton",
+          "buttons": [
+            {
+              "offset": 5,
+              "bit": 6,
+              "value": 6554
+            },
+            {
+              "offset": 5,
+              "bit": 7,
+              "value": 19660
+            },
+            {
+              "offset": 5,
+              "bit": 5,
+              "value": 26214
+            },
+            {
+              "offset": 5,
+              "bit": 4,
+              "value": 36044
+            },
+            {
+              "offset": 6,
+              "bit": 2,
+              "value": 45875
+            },
+            {
+              "offset": 6,
+              "bit": 3,
+              "value": 52428
+            }
+          ]
+        },
+        {
+          "channel": 6,
+          "type": "button",
+          "offset": 6,
+          "bit": 5
+        },
+        {
+          "channel": 7,
+          "type": "hat",
+          "offset": 5,
+          "axis": "x"
+        },
+        {
+          "channel": 8,
+          "type": "hat",
+          "offset": 5,
+          "axis": "y"
+        }
+      ]
     }
   ]
 }
