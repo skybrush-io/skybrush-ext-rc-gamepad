@@ -24,7 +24,7 @@ class GamepadScanner:
         return self._rules
 
     async def scan(self) -> Optional[Tuple[HIDDescriptor, ChannelMap]]:
-        result = await to_thread.run_sync(self._scan_sync, cancellable=True)
+        result = await to_thread.run_sync(self._scan_sync, abandon_on_cancel=True)
         return result  # type: ignore
 
     def _scan_sync(self) -> Optional[Tuple[HIDDescriptor, ChannelMap]]:
