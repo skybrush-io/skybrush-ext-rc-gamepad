@@ -253,7 +253,9 @@ class ChannelDefinition:
             if self._scaler is None:
                 self._scaler = Scaler(self.in_range, self.out_range, self.invert)
             if self.signed:
-                value = (data[self.offset] & 0x7f) - (128 if data[self.offset] & 0x80 else 0)
+                value = (data[self.offset] & 0x7F) - (
+                    128 if data[self.offset] & 0x80 else 0
+                )
             else:
                 value = data[self.offset]
             value = self._scaler(value)
