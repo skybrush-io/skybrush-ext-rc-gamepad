@@ -343,6 +343,65 @@
           "axis": "y"
         }
       ]
+    },
+    {
+      "match": [
+        {
+          "vid": "0x0483",
+          "pid": "0x5720",
+          "description": "FrSky Simulator XSR-SIM"
+        }
+      ],
+      "controls": [
+        {
+          "channel": 1,
+          "type": "axis",
+          "offset": 3,
+          "signed": true
+        },
+        {
+          "channel": 2,
+          "type": "axis",
+          "offset": 4,
+          "signed": true
+        },
+        {
+          "channel": 3,
+          "type": "axis",
+          "offset": 5,
+          "signed": true
+        },
+        {
+          "channel": 4,
+          "type": "axis",
+          "offset": 6,
+          "signed": true
+        },
+        {
+          "channel": 5,
+          "type": "axis",
+          "offset": 7,
+          "signed": true
+        },
+        {
+          "channel": 6,
+          "type": "axis",
+          "offset": 8,
+          "signed": true
+        },
+        {
+          "channel": 7,
+          "type": "axis",
+          "offset": 9,
+          "signed": true
+        },
+        {
+          "channel": 8,
+          "type": "axis",
+          "offset": 10,
+          "signed": true
+        }
+      ]
     }
   ]
 }

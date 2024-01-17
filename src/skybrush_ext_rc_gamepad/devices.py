@@ -141,6 +141,12 @@ class ChannelDefinition:
     the corresponding RC channel.
     """
 
+    signed: bool = False
+    """Whether to treat the in-range as a signed byte when mapping a value from
+    the gamepad to the corresponding RC channel; used only when the type is
+    `ChannelMappingType.AXIS`.
+     """
+
     _scaler: Optional[Scaler] = None
 
     @classmethod
@@ -183,6 +189,9 @@ class ChannelDefinition:
         else:
             buttons = []
 
+        # Parse whether input is signed
+        signed = bool(obj.get("signed"))
+
         # Parse input range
         if "in_range" in obj:
             in_range = obj["in_range"]
@@ -191,7 +200,10 @@ class ChannelDefinition:
 
             in_range = int(in_range[0]), int(in_range[1])
         else:
-            in_range = (0, 255)
+            if signed:
+                in_range = (-128, 127)
+            else:
+                in_range = (0, 255)
 
         # Parse output range
         if "out_range" in obj:
@@ -213,6 +225,7 @@ class ChannelDefinition:
             in_range=in_range,
             out_range=out_range,
             invert=bool(obj.get("invert")),
+            signed=signed,
         )
 
     @staticmethod
@@ -239,7 +252,11 @@ class ChannelDefinition:
             # bit is ignored, just take the byte at the given offset
             if self._scaler is None:
                 self._scaler = Scaler(self.in_range, self.out_range, self.invert)
-            value = self._scaler(data[self.offset])
+            if self.signed:
+                value = (data[self.offset] & 0x7f) - (128 if data[self.offset] & 0x80 else 0)
+            else:
+                value = data[self.offset]
+            value = self._scaler(value)
             channels[self.channel] = int(round(value))
 
         elif self.type is ChannelMappingType.BUTTON:
