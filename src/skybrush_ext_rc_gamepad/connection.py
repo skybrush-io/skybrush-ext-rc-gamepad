@@ -69,7 +69,7 @@ class GamepadConnection(TaskConnectionBase, ReadableConnection[List[int]]):
                 started,
                 request_stop.is_set,
                 stopped.set,
-                cancellable=True,
+                abandon_on_cancel=True,
                 limiter=self._limiter,
             )
         except OSError as ex:
