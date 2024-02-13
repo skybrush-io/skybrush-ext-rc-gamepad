@@ -25,6 +25,46 @@ bytes of the HID input report should be mapped to which RC channels.
 5. In the shell prompt, type `skybrushd -c skybrushd.jsonc` to start the server
    with a configuration file that loads the extension.
 
+## Known Issues
+
+### Accessing USB devices without sudo permissions on Ubuntu
+
+When attempting to use USB devices with applications on Ubuntu, users might encounter permission issues that prevent the application from accessing the device without elevated privileges.
+
+**Solution: Creating a custon udev rule for USB devices**
+
+To solve this issue, you can create a udev rule to set the appropriate permissions for your USB device, allowing non-root users to access it.
+
+1. **Identify the vendor and product ID of your USB device**:
+   - Connect your USB device to your Ubuntu machine.
+   - Open a Terminal (`Ctrl + Alt + T`) and run the command `lsusb`. This lists all connected USB devices.
+   - Locate your device in the list and note the `ID` part, which is formatted as `idVendor:idProduct`. For example, `054c:05c4`.
+
+2. **Create a udev rule file**:
+   - Use a text editor in the Terminal to create a new udev rule file in the `/etc/udev/rules.d/` directory. For instance, using `nano`:
+     ```
+     sudo nano /etc/udev/rules.d/99-usbdevices.rules
+     ```
+
+3. **Add a custom udev rule**:
+   - In the editor, add the following line, substituting `your_idVendor_here` and `your_idProduct_here` with your device's actual vendor and product IDs from the `lsusb` output:
+     ```
+     SUBSYSTEM=="usb", ATTRS{idVendor}=="your_idVendor_here", ATTRS{idProduct}=="your_idProduct_here", MODE="0666"
+     ```
+   - This rule adjusts the permissions for your specific USB device, allowing all users read/write access.
+
+4. **Save and close the file**:
+   - If using `nano`, press `Ctrl + O` to save, followed by `Ctrl + X` to exit.
+
+5. **Reload udev rules**:
+   - To apply the new rule, reload the udev rules with the following command:
+     ```
+     sudo udevadm control --reload-rules && sudo udevadm trigger
+     ```
+
+6. **Test your device**:
+   - Disconnect and reconnect your USB device, then test it with your application to ensure it operates correctly without needing sudo permissions.
+
 ## Adding support for a new gamepad
 
 See [`src/skybrush_ext_rc_gamepad/supported_devices.json`][1]; this is the file
