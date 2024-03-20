@@ -402,6 +402,69 @@
           "signed": true
         }
       ]
+    },
+    {
+      "match": [
+        {
+          "vid": "0x1209",
+          "pid": "0x4F54",
+          "description": "FrSky Taranis X9D"
+        }
+      ],
+      "controls": [
+        {
+          "channel": 1,
+          "type": "axis",
+          "offset": 4,
+          "signed": true
+        },
+        {
+          "channel": 2,
+          "type": "axis",
+          "offset": 6,
+          "signed": true
+        },
+        {
+          "channel": 3,
+          "type": "axis",
+          "offset": 8,
+          "signed": true
+        },
+        {
+          "channel": 4,
+          "type": "axis",
+          "offset": 10,
+          "signed": true
+
+        },
+        {
+          "channel": 5,
+          "type": "button",
+          "offset": 12,
+          "value": 2000
+        },
+        {
+          "channel": 6,
+          "type": "axis",
+          "offset": 14,
+          "signed": true
+
+        },
+        {
+          "channel": 7,
+          "type": "axis",
+          "offset": 16,
+          "signed": true
+
+        },
+        {
+          "channel": 8,
+          "type": "axis",
+          "offset": 18,
+          "signed": true
+
+        }
+      ]
     }
   ]
 }
