@@ -158,9 +158,19 @@
         },
         {
           "channel": 6,
-          "type": "button",
-          "offset": 6,
-          "bit": 5
+          "type": "multibutton",
+          "buttons": [
+            {
+              "offset": 6,
+              "bit": 2,
+              "value": 0
+            },
+            {
+              "offset": 6,
+              "bit": 3,
+              "value": 65535
+            }
+          ]
         },
         {
           "channel": 7,
