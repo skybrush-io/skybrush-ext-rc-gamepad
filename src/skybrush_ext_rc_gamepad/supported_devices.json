@@ -93,6 +93,11 @@
           "description": "Sony PlayStation 4 DualShock 4"
         },
         {
+          "vid": "0x054c",
+          "pid": "0x09cc",
+          "description": "Sony PlayStation 4 DualShock 4"
+        },
+        {
           "vid": "0x0f0d",
           "pid": "0x00ee",
           "description": "HORIPAD mini4"
