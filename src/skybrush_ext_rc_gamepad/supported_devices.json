@@ -417,6 +417,77 @@
           "signed": true
         }
       ]
+    },
+    {
+      "match": [
+        {
+          "vid": "0x1781",
+          "pid": "0x0e56",
+          "description": "Futaba RealFlight InterLink Elite"
+        }
+      ],
+      "controls": [
+        {
+          "channel": 1,
+          "type": "axis",
+          "offset": 1,
+          "signed": false
+        },
+        {
+          "channel": 2,
+          "type": "axis",
+          "offset": 2,
+          "signed": false
+        },
+        {
+          "channel": 3,
+          "type": "axis",
+          "offset": 3,
+          "signed": false,
+          "invert": true
+        },
+        {
+          "channel": 4,
+          "type": "axis",
+          "offset": 5,
+          "signed": false
+        },
+        {
+          "channel": 5,
+          "type": "button",
+          "offset": 7,
+          "bit": 0
+        },
+        {
+          "channel": 6,
+          "type": "axis",
+          "offset": 4,
+          "signed": false
+        },
+        {
+          "channel": 7,
+          "type": "button",
+          "offset": 7,
+          "bit": 1,
+          "invert": true
+        },
+        {
+          "channel": 8,
+          "type": "multibutton",
+          "buttons": [
+            {
+              "offset": 7,
+              "bit": 3,
+              "value": 32768
+            },
+            {
+              "offset": 7,
+              "bit": 4,
+              "value": 65535
+            }
+          ]
+        }
+      ]
     }
   ]
 }
