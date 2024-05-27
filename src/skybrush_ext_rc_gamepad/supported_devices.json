@@ -456,7 +456,8 @@
           "channel": 5,
           "type": "button",
           "offset": 7,
-          "bit": 0
+          "bit": 0,
+          "invert": true
         },
         {
           "channel": 6,
