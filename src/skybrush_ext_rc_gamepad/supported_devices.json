@@ -489,6 +489,106 @@
           ]
         }
       ]
+    },
+    {
+      "match": [
+        {
+          "vid": "0x046d",
+          "pid": "0xc216",
+          "description": "LogiTech F310"
+        }
+      ],
+      "controls": [
+        {
+          "channel": 1,
+          "type": "axis",
+          "offset": 2,
+          "signed": false
+        },
+        {
+          "channel": 2,
+          "type": "axis",
+          "offset": 3,
+          "signed": false
+        },
+        {
+          "channel": 3,
+          "type": "axis",
+          "offset": 1,
+          "signed": false,
+          "invert": true
+        },
+        {
+          "channel": 4,
+          "type": "axis",
+          "offset": 0,
+          "signed": false
+        },
+        {
+          "channel": 5,
+          "type": "multibutton",
+          "buttons": [
+            {
+              "offset": 4,
+              "bit": 5,
+              "value": 6554
+            },
+            {
+              "offset": 4,
+              "bit": 4,
+              "value": 19660
+            },
+            {
+              "offset": 4,
+              "bit": 6,
+              "value": 26214
+            },
+            {
+              "offset": 4,
+              "bit": 7,
+              "value": 36044
+            },
+            {
+              "offset": 5,
+              "bit": 0,
+              "value": 45875
+            },
+            {
+              "offset": 5,
+              "bit": 1,
+              "value": 52428
+            }
+          ]
+        },
+        {
+          "channel": 6,
+          "type": "multibutton",
+          "buttons": [
+            {
+              "offset": 5,
+              "bit": 2,
+              "value": 0
+            },
+            {
+              "offset": 5,
+              "bit": 3,
+              "value": 65535
+            }
+          ]
+        },
+        {
+          "channel": 7,
+          "type": "hat",
+          "offset": 4,
+          "axis": "x"
+        },
+        {
+          "channel": 8,
+          "type": "hat",
+          "offset": 4,
+          "axis": "y"
+        }
+      ]
     }
   ]
 }
