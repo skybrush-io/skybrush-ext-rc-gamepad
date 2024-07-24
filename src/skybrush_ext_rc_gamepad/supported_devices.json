@@ -589,6 +589,102 @@
           "axis": "y"
         }
       ]
+    },
+    {
+      "match": [
+        {
+          "vid": "0x0079",
+          "pid": "0x0006",
+          "description": "Microntek USB Joystick / DragonRise Inc. PC TWIN SHOCK"
+        }
+      ],
+      "controls": [
+        {
+          "channel": 1,
+          "type": "axis",
+          "offset": 3
+        },
+        {
+          "channel": 2,
+          "type": "axis",
+          "offset": 4
+        },
+        {
+          "channel": 3,
+          "type": "axis",
+          "offset": 1,
+          "invert": true
+        },
+        {
+          "channel": 4,
+          "type": "axis",
+          "offset": 0
+        },
+        {
+          "channel": 5,
+          "type": "multibutton",
+          "buttons": [
+            {
+              "offset": 5,
+              "bit": 4,
+              "value": 6554
+            },
+            {
+              "offset": 5,
+              "bit": 5,
+              "value": 19660
+            },
+            {
+              "offset": 5,
+              "bit": 6,
+              "value": 26214
+            },
+            {
+              "offset": 5,
+              "bit": 7,
+              "value": 36044
+            },
+            {
+              "offset": 6,
+              "bit": 0,
+              "value": 45875
+            },
+            {
+              "offset": 6,
+              "bit": 1,
+              "value": 52428
+            }
+          ]
+        },
+        {
+          "channel": 6,
+          "type": "multibutton",
+          "buttons": [
+            {
+              "offset": 6,
+              "bit": 2,
+              "value": 0
+            },
+            {
+              "offset": 6,
+              "bit": 3,
+              "value": 65535
+            }
+          ]
+        },
+        {
+          "channel": 7,
+          "type": "hat",
+          "offset": 5,
+          "axis": "x"
+        },
+        {
+          "channel": 8,
+          "type": "hat",
+          "offset": 5,
+          "axis": "y"
+        }
+      ]
     }
   ]
 }
