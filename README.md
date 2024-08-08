@@ -25,6 +25,19 @@ bytes of the HID input report should be mapped to which RC channels.
 5. In the shell prompt, type `skybrushd -c skybrushd.jsonc` to start the server
    with a configuration file that loads the extension.
 
+## Channel mapping
+
+All gamepads are mapped in [`src/skybrush_ext_rc_gamepad/supported_devices.json`][1] to the RC channels with Mode 2 setup in the following default way:
+
+* Channel 1: Roll input - right stick / axis (right+ left-)
+* Channel 2: Pitch input - right stick / axis (down+ up-)
+* Channel 3: Throttle input - left stick / axis (up+ down-)
+* Channel 4: Yaw input - left stick / axis (right+ left-)
+* Channel 5: 6-stage flight mode switch - four action buttons / 0-1-2-3 / A-B-X-Y and two bumpers / shoulder 1 / upper buttons
+* Channel 6: 2-stage general switch - two triggers / shoulder 2 / lower buttons (left- right+)
+* Channel 7: 2-stage general switch - Two hat X / D-Pad buttons (left- right+)
+* Channel 8: 2-stage general switch - Two hat Y / D-Pad buttons (down+ up-)
+
 ## Known Issues
 
 ### Accessing USB devices without sudo permissions on Ubuntu
