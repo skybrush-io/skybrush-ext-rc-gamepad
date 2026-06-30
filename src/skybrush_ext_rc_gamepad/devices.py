@@ -332,10 +332,7 @@ class Rule:
 
         return cls(
             conditions,
-            [
-                ChannelDefinition.from_json(cast(Any, spec))
-                for spec in channel_map
-            ],
+            [ChannelDefinition.from_json(spec) for spec in channel_map],
         )
 
     @staticmethod
