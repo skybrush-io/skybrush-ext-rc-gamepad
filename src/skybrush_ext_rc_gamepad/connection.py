@@ -1,6 +1,7 @@
-from flockwave.connections.base import TaskConnectionBase, ReadableConnection
-from typing import Callable, List, Optional, TYPE_CHECKING
+from collections.abc import Callable
+from typing import TYPE_CHECKING
 
+from flockwave.connections.base import ReadableConnection, TaskConnectionBase
 from trio import (
     CapacityLimiter,
     Event,
@@ -20,7 +21,7 @@ if TYPE_CHECKING:
 __all__ = ("GamepadConnection",)
 
 
-class GamepadConnection(TaskConnectionBase, ReadableConnection[List[int]]):
+class GamepadConnection(TaskConnectionBase, ReadableConnection[list[int]]):
     """Class that represents a connection to a single gamepad device."""
 
     _descriptor: HIDDescriptor
@@ -31,7 +32,7 @@ class GamepadConnection(TaskConnectionBase, ReadableConnection[List[int]]):
     the standard Trio thread pool.
     """
 
-    _rx_queue: Optional[ReceiveChannel[List[int]]]
+    _rx_queue: ReceiveChannel[list[int]] | None
     """Queue that is used to receive the bytes read from the gamepad device
     in the worker thread.
     """
@@ -85,7 +86,7 @@ class GamepadConnection(TaskConnectionBase, ReadableConnection[List[int]]):
                 await stopped.wait()
             self._rx_queue = None
 
-    async def read(self) -> List[int]:
+    async def read(self) -> list[int]:
         assert self._rx_queue is not None
         return await self._rx_queue.receive()
 

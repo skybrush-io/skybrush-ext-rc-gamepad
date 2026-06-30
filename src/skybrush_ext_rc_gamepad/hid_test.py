@@ -49,7 +49,9 @@ def main():
     gamepad = hid.device()
     print("Opening device...")
     gamepad.open_path(devices[selected])
-    print("Device opened successfully, reading input reports. Press ^C to abort.")
+    print(
+        "Device opened successfully, reading input reports. Press ^C to abort."
+    )
     with closing(gamepad):
         while True:
             report = gamepad.read(64)

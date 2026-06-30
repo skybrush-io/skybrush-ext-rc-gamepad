@@ -1,5 +1,3 @@
-from typing import Tuple
-
 __all__ = ("Scaler",)
 
 
@@ -21,8 +19,8 @@ class Scaler:
 
     def __init__(
         self,
-        in_range: Tuple[float, float],
-        out_range: Tuple[float, float],
+        in_range: tuple[float, float],
+        out_range: tuple[float, float],
         invert: bool = False,
     ):
         self._low, self._high = in_range
@@ -33,7 +31,9 @@ class Scaler:
             self._out_low, self._out_high = out_range
 
         if self._low != self._high:
-            self._scale = (self._out_high - self._out_low) / (self._high - self._low)
+            self._scale = (self._out_high - self._out_low) / (
+                self._high - self._low
+            )
         else:
             self._scale = 0.0
 

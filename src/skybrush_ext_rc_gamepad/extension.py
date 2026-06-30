@@ -1,15 +1,14 @@
-from aio_usb_hotplug import HotplugEvent, HotplugEventType
+from collections.abc import Callable
 from contextlib import ExitStack
 from functools import partial
-from typing import Callable, List
 
+from aio_usb_hotplug import HotplugEvent, HotplugEventType
+from flockwave.server.ext.base import Extension
 from trio import open_nursery
 from trio_util import RepeatedEvent
 
-from flockwave.server.ext.base import Extension
-
 from .connection import GamepadConnection
-from .devices import HIDDescriptor, ChannelMap
+from .devices import ChannelMap, HIDDescriptor
 from .scanner import GamepadScanner
 
 __all__ = ("RCGamepadExtension",)
@@ -37,10 +36,14 @@ class RCGamepadExtension(Extension):
 
             if "devices" in configuration:
                 num_rules = len(scanner.rules)
-                scanner.rules.extend_from_json(configuration["devices"], prepend=True)
+                scanner.rules.extend_from_json(
+                    configuration["devices"], prepend=True
+                )
                 num_rules = len(scanner.rules) - num_rules
                 if num_rules == 1:
-                    logger.info("Loaded 1 custom device rule from configuration")
+                    logger.info(
+                        "Loaded 1 custom device rule from configuration"
+                    )
                 elif num_rules > 1:
                     logger.info(
                         f"Loaded {num_rules} custom device rules from configuration"
@@ -92,12 +95,14 @@ class RCGamepadExtension(Extension):
         self,
         conn: GamepadConnection,
         channel_map: ChannelMap,
-        notify: Callable[[List[int]], None],
+        notify: Callable[[list[int]], None],
     ) -> None:
         if self.app is None:
             return
 
-        num_channels = max((spec.channel + 1 for spec in channel_map), default=0)
+        num_channels = max(
+            (spec.channel + 1 for spec in channel_map), default=0
+        )
         channels = [0] * num_channels
 
         while True:

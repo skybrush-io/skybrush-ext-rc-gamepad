@@ -4,7 +4,7 @@ name = "skybrush-ext-rc-gamepad"
 version = "0.9.0"
 description = "Enabling the usage of gamepads as remote controllers in Skybrush Server"
 authors = [
-  { name = "Tamas Nepusz", email = "tamas@collmot.com" },  
+  { name = "Tamas Nepusz", email = "tamas@collmot.com" },
 ]
 requires-python = ">=3.10"
 license = "MIT"
@@ -35,7 +35,9 @@ flockwave-server = { index = "fury" }
 [tool.ruff]
 line-length = 80
 lint.ignore = [
+  "C901", # Function too complex
   "E501", # Line too long
+  "S101", # assert
 ]
 lint.select = [
   "B", # flake8-bugbear

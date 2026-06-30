@@ -1,7 +1,6 @@
 """Class that scans the USB bus for devices that we can treat as a USB gamepad."""
 
 from trio import to_thread
-from typing import Optional, Set, Tuple
 
 from .devices import ChannelMap, HIDDescriptor, SupportedDeviceRules
 
@@ -23,17 +22,19 @@ class GamepadScanner:
         """
         return self._rules
 
-    async def scan(self) -> Optional[Tuple[HIDDescriptor, ChannelMap]]:
-        result = await to_thread.run_sync(self._scan_sync, abandon_on_cancel=True)
-        return result  # type: ignore
+    async def scan(self) -> tuple[HIDDescriptor, ChannelMap] | None:
+        result = await to_thread.run_sync(
+            self._scan_sync, abandon_on_cancel=True
+        )
+        return result
 
-    def _scan_sync(self) -> Optional[Tuple[HIDDescriptor, ChannelMap]]:
+    def _scan_sync(self) -> tuple[HIDDescriptor, ChannelMap] | None:
         """Blocking core of the ``scan()`` method. Must be run on a separate
         thread so we don't block the main Trio loop.
         """
         import hid
 
-        seen: Set[HIDDescriptor] = set()
+        seen: set[HIDDescriptor] = set()
         for device in hid.enumerate():
             # Limit ourselves to generic HID devices only
             if device.get("usage_page") not in (0, 1):
@@ -43,7 +44,7 @@ class GamepadScanner:
             # and the serial number
             try:
                 descriptor = HIDDescriptor.from_dict(device)
-            except Exception:
+            except Exception:  # noqa: S112
                 continue
 
             # Have we seen this device already (maybe with a different usage

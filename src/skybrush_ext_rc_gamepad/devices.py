@@ -1,9 +1,9 @@
 from ast import literal_eval
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 from dataclasses import dataclass, field
 from enum import Enum
 from fnmatch import fnmatch
-from typing import cast, Any, Dict, Iterable, List, Optional, Tuple, Union
+from typing import Any, cast
 
 from .utils import Scaler
 
@@ -42,7 +42,7 @@ class HIDDescriptor:
     """The serial number of the device"""
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]):
+    def from_dict(cls, data: dict[str, Any]):
         """Constructs a Human Interface Device descriptor from a dictionary
         representation that typically appears in the result of
         ``hid.enumerate()``.
@@ -60,7 +60,7 @@ class HIDDescriptor:
         """Returns a nicely formatted, human-readable string representation
         of the descriptor.
         """
-        parts: List[str] = []
+        parts: list[str] = []
         if self.manufacturer:
             parts.append(self.manufacturer)
         if self.product:
@@ -78,7 +78,7 @@ class ChannelMappingType(Enum):
 
 
 # N NE E SE S SW W NW
-_hat_to_value: Dict[str, List[int]] = {
+_hat_to_value: dict[str, list[int]] = {
     "x": [0, 1, 1, 1, 0, -1, -1, -1] + [0] * 8,
     "y": [-1, -1, 0, 1, 1, 1, 0, -1] + [0] * 8,
 }
@@ -119,17 +119,17 @@ class ChannelDefinition:
     type is `ChannelMappingType.HAT`.
     """
 
-    buttons: List[Tuple[int, int, int]] = field(default_factory=list)
+    buttons: list[tuple[int, int, int]] = field(default_factory=list)
     """A list of offset-bit-value triplets, one for each possible state of a
     multi-button mapping.
     """
 
-    in_range: Tuple[int, int] = (0, 255)
+    in_range: tuple[int, int] = (0, 255)
     """Input range coming from the gamepad that is to be mapped to the output
     range of the RC channel. Closed from both ends.
     """
 
-    out_range: Tuple[int, int] = (0, 65535)
+    out_range: tuple[int, int] = (0, 65535)
     """Output range of the RC channel being mapped. Closed from both ends.
     Note that Skybrush Server uses 16 bits to represent an RC channel; these
     will be mapped to a more conventional [1000; 2000] range in drone-specific
@@ -147,12 +147,14 @@ class ChannelDefinition:
     `ChannelMappingType.AXIS`.
      """
 
-    _scaler: Optional[Scaler] = None
+    _scaler: Scaler | None = None
 
     @classmethod
-    def from_json(cls, obj: Dict[str, Any]):
+    def from_json(cls, obj: dict[str, Any]):
         if not isinstance(obj, dict):
-            raise TypeError(f"control definition must be an object, got {type(obj)!r}")
+            raise TypeError(
+                f"control definition must be an object, got {type(obj)!r}"
+            )
 
         # Extract channel index
         channel = obj.get("channel")
@@ -229,7 +231,7 @@ class ChannelDefinition:
         )
 
     @staticmethod
-    def _process_button_spec(spec: Any) -> Tuple[int, int, int]:
+    def _process_button_spec(spec: Any) -> tuple[int, int, int]:
         """Helper function for `from_json()` that parses a single button
         specification from a multi-button entry.
         """
@@ -245,13 +247,15 @@ class ChannelDefinition:
         return offset, bit, value
 
     def update_channels_from_hid_report(
-        self, channels: List[int], data: List[int]
+        self, channels: list[int], data: list[int]
     ) -> None:
         """Updates the list of channel values from the given HID status report."""
         if self.type is ChannelMappingType.AXIS:
             # bit is ignored, just take the byte at the given offset
             if self._scaler is None:
-                self._scaler = Scaler(self.in_range, self.out_range, self.invert)
+                self._scaler = Scaler(
+                    self.in_range, self.out_range, self.invert
+                )
             if self.signed:
                 value = (data[self.offset] & 0x7F) - (data[self.offset] & 0x80)
             else:
@@ -284,7 +288,7 @@ class ChannelDefinition:
                     break
 
 
-ChannelMap = List[ChannelDefinition]
+ChannelMap = list[ChannelDefinition]
 
 
 @dataclass(frozen=True)
@@ -296,7 +300,7 @@ class Rule:
     joystick definitions found in MAVProxy.
     """
 
-    conditions: List[Dict[str, Union[int, str]]]
+    conditions: list[dict[str, int | str]]
     """List of conditions that define when the rule should be applied. The
     rule is applied if it matches at least one entry from the condition list.
 
@@ -307,7 +311,7 @@ class Rule:
     channels: ChannelMap
 
     @classmethod
-    def from_json(cls, obj: Dict[str, Any]):
+    def from_json(cls, obj: dict[str, Any]):
         """Creates a rule from a JSON representation that is used in the
         `supported_devices.json` file that comes with the extension.
         """
@@ -322,11 +326,16 @@ class Rule:
 
         channel_map = obj.get("controls")
         if not isinstance(channel_map, list):
-            raise TypeError(f"channel map must be a list, got {type(channel_map)!r}")
+            raise TypeError(
+                f"channel map must be a list, got {type(channel_map)!r}"
+            )
 
         return cls(
             conditions,
-            [ChannelDefinition.from_json(cast(Any, spec)) for spec in channel_map],
+            [
+                ChannelDefinition.from_json(cast(Any, spec))
+                for spec in channel_map
+            ],
         )
 
     @staticmethod
@@ -334,9 +343,11 @@ class Rule:
         if isinstance(cond, str):
             cond = {"product": cond}
         elif not isinstance(cond, dict):
-            raise TypeError(f"rule conditions must be objects, got {type(cond)!r}")
+            raise TypeError(
+                f"rule conditions must be objects, got {type(cond)!r}"
+            )
 
-        cond = cast(Dict[str, Any], cond)
+        cond = cast(dict[str, Any], cond)
 
         if "vid" in cond:
             if isinstance(cond["vid"], str):
@@ -358,10 +369,12 @@ class Rule:
 
     def match(self, descriptor: HIDDescriptor) -> bool:
         """Returns whether the rule matches the given HID descriptor."""
-        return any(self._match_entry(descriptor, entry) for entry in self.conditions)
+        return any(
+            self._match_entry(descriptor, entry) for entry in self.conditions
+        )
 
     def _match_entry(
-        self, descriptor: HIDDescriptor, entry: Dict[str, Union[int, str]]
+        self, descriptor: HIDDescriptor, entry: dict[str, int | str]
     ) -> bool:
         for key in ("vid", "pid"):
             if key in entry and getattr(descriptor, key) != entry[key]:
@@ -386,7 +399,7 @@ class SupportedDeviceRules(Sequence[Rule]):
     supported and how their HID reports are mapped to RC channels.
     """
 
-    _rules: List[Rule]
+    _rules: list[Rule]
 
     @classmethod
     def create(cls, builtins: bool = True):
@@ -459,7 +472,7 @@ class SupportedDeviceRules(Sequence[Rule]):
         with open_text(__package__, "supported_devices.json") as fp:
             self.extend_from_json(load(fp), prepend=prepend)
 
-    def match(self, descriptor: HIDDescriptor) -> Optional[Rule]:
+    def match(self, descriptor: HIDDescriptor) -> Rule | None:
         """Returns the first rule in the ruleset that matches the given HID
         descriptor, or ``None`` if no rule matches the HID descriptor.
         """
